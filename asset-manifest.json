@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/tray-tech-challenge/static/css/main.ebd04a46.chunk.css",
+    "main.js": "/tray-tech-challenge/static/js/main.43ec9772.chunk.js",
+    "main.js.map": "/tray-tech-challenge/static/js/main.43ec9772.chunk.js.map",
+    "runtime-main.js": "/tray-tech-challenge/static/js/runtime-main.1a7f271e.js",
+    "runtime-main.js.map": "/tray-tech-challenge/static/js/runtime-main.1a7f271e.js.map",
+    "static/js/2.dd068dba.chunk.js": "/tray-tech-challenge/static/js/2.dd068dba.chunk.js",
+    "static/js/2.dd068dba.chunk.js.map": "/tray-tech-challenge/static/js/2.dd068dba.chunk.js.map",
+    "index.html": "/tray-tech-challenge/index.html",
+    "precache-manifest.df30b009015ad5953303bec824bade7c.js": "/tray-tech-challenge/precache-manifest.df30b009015ad5953303bec824bade7c.js",
+    "service-worker.js": "/tray-tech-challenge/service-worker.js",
+    "static/css/main.ebd04a46.chunk.css.map": "/tray-tech-challenge/static/css/main.ebd04a46.chunk.css.map",
+    "static/js/2.dd068dba.chunk.js.LICENSE.txt": "/tray-tech-challenge/static/js/2.dd068dba.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1a7f271e.js",
+    "static/js/2.dd068dba.chunk.js",
+    "static/css/main.ebd04a46.chunk.css",
+    "static/js/main.43ec9772.chunk.js"
+  ]
+}
