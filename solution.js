@@ -8,8 +8,8 @@ const roomDimensions = input.shift();
 const roomXDim = parseInt(roomDimensions[0]);
 const roomYDim = parseInt(roomDimensions[2]);
 const hooverPosition = input.shift();
-const hooverXPos = hooverPosition[0];
-const hooverYPos = hooverPosition[2];
+let hooverXPos = parseInt(hooverPosition[0]);
+let hooverYPos = parseInt(hooverPosition[2]);
 let numDirtPatches = input.length - 1;
 let dirtPatches = [];
 while (numDirtPatches > 0) {
@@ -17,7 +17,7 @@ while (numDirtPatches > 0) {
   dirtPatches.push({ X: parseInt(dirtPatch[0]), Y: parseInt(dirtPatch[2])});
   numDirtPatches--;
 }
-const drivingInstructions = input.shift();
+let drivingInstructions = input.shift();
 
 console.log(`roomDimensions: ${roomXDim} x ${roomYDim}`);
 console.log(`hooverPosition: X: ${hooverXPos}, Y: ${hooverYPos}`);
@@ -40,3 +40,45 @@ if (dirtPatches.length) {
   })
 }
 
+drivingInstructions = drivingInstructions.split('');
+let numDirtPilesCleaned = 0;
+
+const cleanDirt = (xPosition, yPosition) => {
+  let arrayPosition = yPosition * offset + xPosition;
+  roomArray[arrayPosition] = { clean: true };
+};
+
+while (drivingInstructions.length) {
+  const directionToMove = drivingInstructions.shift();
+
+// clean dirt pile
+  cleanDirt(hooverXPos, hooverYPos);
+
+// figure out where to go next
+  switch (directionToMove) {
+    case 'N':
+      if (hooverYPos >= roomYDim - 1) break;
+      hooverYPos += 1;
+      break;
+    case 'S':
+      if (hooverYPos === 0) break;
+      hooverYPos -= 1;
+      break;
+    case 'E':
+      if ((hooverXPos + 1) % offset === 0) break;
+      hooverXPos += 1;
+      break;
+    case 'W':
+      if (hooverXPos % offset === 0) break;
+      hooverXPos -= 1;
+      break;
+    default:
+      break;
+  }
+}
+
+// clean dirt pile at final location
+cleanDirt(hooverXPos, hooverYPos);
+
+console.log(`${hooverXPos} ${hooverYPos}`);
+console.log(numDirtPilesCleaned);
