@@ -1,17 +1,9 @@
-// import axios from 'axios';
+const BASE_URL = '/api/v1/input';
 
-const getInputFromBackend = async () => {
-  // const result = await axios.get('http://localhost:3000/input');
-  const result = await
-  `5 5
-1 2
-1 0
-2 2
-2 3
-NNESEESWNWW`;
-  return result;
+const getInputFromBackend = () => {
+  return fetch(BASE_URL).then(res => res.json());
 };
 
-export {
-  getInputFromBackend,
+export default {
+  getInputFromBackend
 };
