@@ -13,45 +13,61 @@ const App = () => {
   };
 
   const setHoover = (hooverX, hooverY, directions, roomX, roomY) => {
-    console.log(directions);
     let offset = roomX;
     document.getElementById(`Y: ${hooverY}`)
       .children[hooverX]
       .classList.add('hoover');
+    const timeoutFunction = (k) => {
+      let hooverLocation = document.getElementById(`Y: ${hooverY}`)
+        .children[hooverX];
+      hooverLocation.classList.remove('hoover');
+      hooverLocation.classList.add('cleaned');
+      switch (directions[k]) {
+        case 'N':
+          if (hooverY >= roomY - 1) break;
+          hooverY++;
+          document.getElementById(`Y: ${hooverY}`)
+            .children[hooverX].classList.remove('cleaned');
+          document.getElementById(`Y: ${hooverY}`)
+            .children[hooverX].classList.add('hoover');
+          break;
+        case 'S':
+          if (hooverY === 0) break;
+          hooverY--;
+          document.getElementById(`Y: ${hooverY}`)
+            .children[hooverX].classList.remove('cleaned');
+          document.getElementById(`Y: ${hooverY}`)
+            .children[hooverX].classList.add('hoover');
+          break;
+        case 'E':
+          if ((hooverX + 1) % offset === 0) break;
+          hooverX++;
+          document.getElementById(`Y: ${hooverY}`)
+            .children[hooverX].classList.remove('cleaned');
+          document.getElementById(`Y: ${hooverY}`)
+            .children[hooverX].classList.add('hoover');
+          break;
+        case 'W':
+          if (hooverX % offset === 0) break;
+          hooverX--;
+          document.getElementById(`Y: ${hooverY}`)
+            .children[hooverX].classList.remove('cleaned');
+          document.getElementById(`Y: ${hooverY}`)
+            .children[hooverX].classList.add('hoover');
+          break;
+        default:
+          break;
+      }
+    };
     for (let k = 0; k < directions.length; k++) {
-      setTimeout(() => {
-        let hooverLocation = document.getElementById(`Y: ${hooverY}`)
-          .children[hooverX];
-        hooverLocation.classList.remove('hoover');
-        hooverLocation.classList.add('cleaned');
-        switch (directions[k]) {
-          case 'N':
-            if (hooverY >= roomY - 1) break;
-            hooverY++;
-            break;
-          case 'S':
-            if (hooverY === 0) break;
-            hooverY--;
-            break;
-          case 'E':
-            if ((hooverX + 1) % offset === 0) break;
-            hooverX++;
-            break;
-          case 'W':
-            if (hooverX % offset === 0) break;
-            hooverX--;
-            break;
-          default:
-            break;
-        }
-      }, 2000);
+      setTimeout(() => timeoutFunction(k), 200 * (k + 1));
     }
-    document.getElementById(`Y: ${hooverY}`)
-      .children[hooverX]
-      .classList.remove('cleaned');
-    document.getElementById(`Y: ${hooverY}`)
-      .children[hooverX]
-      .classList.add('hoover');
+    // document.getElementById(`Y: ${hooverY}`)
+    //   .children[hooverX]
+    //   .classList.remove('cleaned');
+    // document.getElementById(`Y: ${hooverY}`)
+    //   .children[hooverX]
+    //   .classList.add('hoover');
   };
 
   const [inputFromBackEnd, setInputFromBackEnd] = useState('');
@@ -166,9 +182,7 @@ const App = () => {
             height: '100%',
             border: '1px solid'
           }}
-        >
-          square {j + 1}
-        </div>
+        ></div>
       )
     }
     
