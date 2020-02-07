@@ -61,8 +61,10 @@ const solveProblem = (input) => {
   // clean dirt pile at final location
   cleanDirt(hooverXPos, hooverYPos);
   
-  console.log(`${hooverXPos} ${hooverYPos}`);
-  console.log(numDirtPilesCleaned);
+  console.log(
+`${hooverXPos} ${hooverYPos}
+${numDirtPilesCleaned}`
+  );
 
 };
 
