@@ -4,11 +4,63 @@ import inputService from './utils/input';
 
 const App = () => {
 
+  const setDirtPiles = (dirtPiles) => {
+    dirtPiles.forEach(dirtPile => {
+      document.getElementById(`Y: ${dirtPile.Y}`)
+        .children[dirtPile.X]
+        .classList.toggle('dirty');
+    });
+  };
+
+  const setHoover = (hooverX, hooverY, directions, roomX, roomY) => {
+    console.log(directions);
+    let offset = roomX;
+    document.getElementById(`Y: ${hooverY}`)
+      .children[hooverX]
+      .classList.add('hoover');
+    for (let k = 0; k < directions.length; k++) {
+      setTimeout(() => {
+        let hooverLocation = document.getElementById(`Y: ${hooverY}`)
+          .children[hooverX];
+        hooverLocation.classList.remove('hoover');
+        hooverLocation.classList.add('cleaned');
+        switch (directions[k]) {
+          case 'N':
+            if (hooverY >= roomY - 1) break;
+            hooverY++;
+            break;
+          case 'S':
+            if (hooverY === 0) break;
+            hooverY--;
+            break;
+          case 'E':
+            if ((hooverX + 1) % offset === 0) break;
+            hooverX++;
+            break;
+          case 'W':
+            if (hooverX % offset === 0) break;
+            hooverX--;
+            break;
+          default:
+            break;
+        }
+      }, 2000);
+    }
+    document.getElementById(`Y: ${hooverY}`)
+      .children[hooverX]
+      .classList.remove('cleaned');
+    document.getElementById(`Y: ${hooverY}`)
+      .children[hooverX]
+      .classList.add('hoover');
+  };
+
   const [inputFromBackEnd, setInputFromBackEnd] = useState('');
   useEffect(() => {
     const settingTheInput = async () => {
       let result = await inputService.getInputFromBackend();
       setInputFromBackEnd(result);
+      setDirtPiles(result.dirtPatches);
+      setHoover(result.hooverXPos, result.hooverYPos, result.drivingInstructions);
     }
     settingTheInput();
   }, []);
@@ -37,7 +89,6 @@ const App = () => {
     const cleanDirt = (xPosition, yPosition) => {
       let arrayPosition = yPosition * offset + xPosition;
       if (roomArray[arrayPosition].clean === false) {
-        // console.log('X: ', xPosition, 'Y: ', yPosition);
         roomArray[arrayPosition] = { clean: true };
         numDirtPilesCleaned++;
       }
@@ -80,11 +131,6 @@ const App = () => {
 
   };
 
-  const setDirtPiles = (dirtPiles) => {
-    console.log(dirtPiles);
-    
-  }
-
   const rows = [];
   const indivSquares = [];
 
@@ -111,7 +157,6 @@ const App = () => {
       indivSquares.push(
         <div 
           key={`column-${j + 1}`}
-          id={`X: ${j}`}
           className='column'
           style={{
             display: 'flex',
@@ -145,7 +190,6 @@ const App = () => {
         </div>
       );
     }
-    setDirtPiles(dirtPatches);
   }
 
   return (

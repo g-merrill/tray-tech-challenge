@@ -1,3 +1,21 @@
 .App {
   text-align: center;
 }
+div {
+  -webkit-transition: all 0.3s ease;
+}
+.column {
+  -webkit-transition: all 0.3s ease;
+}
+.dirty {
+  -webkit-transition: all 0.3s ease;
+  background: rgb(165, 87, 42);
+}
+.hoover {
+  -webkit-transition: all 0.3s ease;
+  background: cornflowerblue;
+}
+.cleaned {
+  -webkit-transition: all 0.3s ease;
+  background: greenyellow;
+}
