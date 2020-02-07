@@ -25,22 +25,15 @@ router.get('/', async (req, res) => {
     }
     
     let drivingInstructions = input.shift();
-    
-    // console.log(`roomDimensions: ${roomXDim} x ${roomYDim}`);
-    // console.log(`hooverInitialPosition: X: ${hooverXPos}, Y: ${hooverYPos}`);
-    // console.log('dirtPatches: ', dirtPatches);
-    // console.log(`drivingInstructions: ${drivingInstructions}`);
 
-    const data = { 
+    res.json({
       roomXDim, 
       roomYDim, 
-      dirtPatches, 
-      drivingInstructions, 
       hooverXPos, 
       hooverYPos,
-    };
-
-    res.json(data);
+      dirtPatches, 
+      drivingInstructions, 
+    });
   } catch (err) {
     res.status(400).json(err);
   }
