@@ -8,19 +8,22 @@ router.get('/', async (req, res) => {
     let input = fs.readFileSync('input.txt', 'utf8');
     input = input.split('\n');
     
-    const roomDimensions = input.shift();
+    let roomDimensions = input.shift();
+    roomDimensions = roomDimensions.split(' ');
     const roomXDim = parseInt(roomDimensions[0]);
-    const roomYDim = parseInt(roomDimensions[2]);
+    const roomYDim = parseInt(roomDimensions[1]);
     
-    const hooverInitialPosition = input.shift();
+    let hooverInitialPosition = input.shift();
+    hooverInitialPosition = hooverInitialPosition.split(' ');
     let hooverXPos = parseInt(hooverInitialPosition[0]);
-    let hooverYPos = parseInt(hooverInitialPosition[2]);
+    let hooverYPos = parseInt(hooverInitialPosition[1]);
     
     let numDirtPatches = input.length - 1;
     let dirtPatches = [];
     while (numDirtPatches > 0) {
       let dirtPatch = input.shift();
-      dirtPatches.push({ X: parseInt(dirtPatch[0]), Y: parseInt(dirtPatch[2])});
+      dirtPatch = dirtPatch.split(' ');
+      dirtPatches.push({ X: parseInt(dirtPatch[0]), Y: parseInt(dirtPatch[1])});
       numDirtPatches--;
     }
     

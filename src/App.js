@@ -5,78 +5,80 @@ import { solveProblem } from './utils/solution';
 
 const App = () => {
 
-  let currentTileClass;
-  const getTileClass = (X, Y) => {
-    currentTileClass = document.getElementById(`Y: ${Y}`)
-      .children[X]
-      .classList
-  };
-
-  const setDirtPiles = (dirtPiles) => {
-    dirtPiles.forEach(dirtPile => {
-      getTileClass(dirtPile.X, dirtPile.Y);
-      currentTileClass.add('dirty');
-    });
-  };
-
-  const setAndStartHoover = (input) => {
-    let { 
-      hooverXPos, 
-      hooverYPos, 
-      drivingInstructions, 
-      roomXDim, 
-      roomYDim
-    } = input;
-
-    getTileClass(hooverXPos, hooverYPos);
-    currentTileClass.add('hoover');
-    currentTileClass.remove('dirty');
-
-    const timeoutFunction = (k) => {
-      currentTileClass.remove('hoover');
-      currentTileClass.add('cleaned');
-
-      switch (drivingInstructions[k]) {
-        case 'N':
-          if (hooverYPos >= roomYDim - 1) break;
-          hooverYPos++;
-          break;
-        case 'S':
-          if (hooverYPos === 0) break;
-          hooverYPos--;
-          break;
-        case 'E':
-          if ((hooverXPos + 1) % roomXDim === 0) break;
-          hooverXPos++;
-          break;
-        case 'W':
-          if (hooverXPos % roomXDim === 0) break;
-          hooverXPos--;
-          break;
-        default:
-          break;
-      }
-
-      getTileClass(hooverXPos, hooverYPos);
-      currentTileClass.remove('dirty');
-      currentTileClass.remove('cleaned');
-      currentTileClass.add('hoover');
-    };
-
-    for (let k = 0; k < drivingInstructions.length; k++) {
-      setTimeout(
-        () => timeoutFunction(k), 
-        k === 0 ? 1500 : 1500 + 200 * k 
-      );
-    }
-  };
-
   const [inputFromBackEnd, setInputFromBackEnd] = useState('');
   useEffect(() => {
     const setInputAsync = async () => {
       let result = await getInputAPICall();
       setInputFromBackEnd(result);
+
+      let currentTileClass;
+      const getTileClass = (X, Y) => {
+        currentTileClass = document.getElementById(`Y: ${Y}`)
+          .children[X]
+          .classList
+      };
+
+      const setDirtPiles = (dirtPiles) => {
+        dirtPiles.forEach(dirtPile => {
+          getTileClass(dirtPile.X, dirtPile.Y);
+          currentTileClass.add('dirty');
+        });
+      };
+
       setDirtPiles(result.dirtPatches);
+
+      const setAndStartHoover = (input) => {
+        let { 
+          hooverXPos, 
+          hooverYPos, 
+          drivingInstructions, 
+          roomXDim, 
+          roomYDim
+        } = input;
+
+        getTileClass(hooverXPos, hooverYPos);
+        currentTileClass.add('hoover');
+        currentTileClass.remove('dirty');
+
+        const timeoutFunction = (k) => {
+          currentTileClass.remove('hoover');
+          currentTileClass.add('cleaned');
+
+          switch (drivingInstructions[k]) {
+            case 'N':
+              if (hooverYPos >= roomYDim - 1) break;
+              hooverYPos++;
+              break;
+            case 'S':
+              if (hooverYPos === 0) break;
+              hooverYPos--;
+              break;
+            case 'E':
+              if ((hooverXPos + 1) % roomXDim === 0) break;
+              hooverXPos++;
+              break;
+            case 'W':
+              if (hooverXPos % roomXDim === 0) break;
+              hooverXPos--;
+              break;
+            default:
+              break;
+          }
+
+          getTileClass(hooverXPos, hooverYPos);
+          currentTileClass.remove('dirty');
+          currentTileClass.remove('cleaned');
+          currentTileClass.add('hoover');
+        };
+
+        for (let k = 0; k < drivingInstructions.length; k++) {
+          setTimeout(
+            () => timeoutFunction(k), 
+            k === 0 ? 1500 : 1500 + 200 * k 
+          );
+        }
+      };
+
       setAndStartHoover(result);
     }
     setInputAsync();
