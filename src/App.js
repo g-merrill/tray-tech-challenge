@@ -5,11 +5,17 @@ import { solveProblem } from './utils/solution';
 
 const App = () => {
 
+  let currentTileClass;
+  const getTileClass = (X, Y) => {
+    currentTileClass = document.getElementById(`Y: ${Y}`)
+      .children[X]
+      .classList
+  };
+
   const setDirtPiles = (dirtPiles) => {
     dirtPiles.forEach(dirtPile => {
-      document.getElementById(`Y: ${dirtPile.Y}`)
-        .children[dirtPile.X]
-        .classList.toggle('dirty');
+      getTileClass(dirtPile.X, dirtPile.Y);
+      currentTileClass.add('dirty');
     });
   };
 
@@ -22,14 +28,7 @@ const App = () => {
       roomYDim
     } = input;
 
-    let currentTileClass;
-    const getTileClass = (hY, hX) => {
-      currentTileClass = document.getElementById(`Y: ${hY}`)
-        .children[hX]
-        .classList
-    };
-
-    getTileClass(hooverYPos, hooverXPos);
+    getTileClass(hooverXPos, hooverYPos);
     currentTileClass.add('hoover');
     currentTileClass.remove('dirty');
 
@@ -58,7 +57,7 @@ const App = () => {
           break;
       }
 
-      getTileClass(hooverYPos, hooverXPos);
+      getTileClass(hooverXPos, hooverYPos);
       currentTileClass.remove('dirty');
       currentTileClass.remove('cleaned');
       currentTileClass.add('hoover');
@@ -89,7 +88,7 @@ const App = () => {
     solveProblem(inputFromBackEnd);
     
     let { roomXDim, roomYDim } = inputFromBackEnd;
-    
+
     for (let j = 0; j < roomXDim; j++) {
       indivSquares.push(
         <div 
