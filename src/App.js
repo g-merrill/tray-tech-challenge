@@ -29,14 +29,14 @@ const App = () => {
 
       const setAndStartHoover = (input) => {
         let { 
-          hooverXPos, 
-          hooverYPos, 
+          hooverXPosition, 
+          hooverYPosition, 
           drivingInstructions, 
-          roomXDim, 
-          roomYDim
+          roomXDimension, 
+          roomYDimension
         } = input;
 
-        getTileClass(hooverXPos, hooverYPos);
+        getTileClass(hooverXPosition, hooverYPosition);
         currentTileClass.add('hoover');
         currentTileClass.remove('dirty');
 
@@ -46,26 +46,26 @@ const App = () => {
 
           switch (drivingInstructions[k]) {
             case 'N':
-              if (hooverYPos >= roomYDim - 1) break;
-              hooverYPos++;
+              if (hooverYPosition >= roomYDimension - 1) break;
+              hooverYPosition++;
               break;
             case 'S':
-              if (hooverYPos === 0) break;
-              hooverYPos--;
+              if (hooverYPosition === 0) break;
+              hooverYPosition--;
               break;
             case 'E':
-              if ((hooverXPos + 1) % roomXDim === 0) break;
-              hooverXPos++;
+              if ((hooverXPosition + 1) % roomXDimension === 0) break;
+              hooverXPosition++;
               break;
             case 'W':
-              if (hooverXPos % roomXDim === 0) break;
-              hooverXPos--;
+              if (hooverXPosition % roomXDimension === 0) break;
+              hooverXPosition--;
               break;
             default:
               break;
           }
 
-          getTileClass(hooverXPos, hooverYPos);
+          getTileClass(hooverXPosition, hooverYPosition);
           currentTileClass.remove('dirty');
           currentTileClass.remove('cleaned');
           currentTileClass.add('hoover');
@@ -85,14 +85,14 @@ const App = () => {
   }, []);
 
   const rows = [];
-  const indivSquares = [];
+  const individualSquares = [];
   if (inputFromBackEnd) {
     solveProblem(inputFromBackEnd);
     
-    let { roomXDim, roomYDim } = inputFromBackEnd;
+    let { roomXDimension, roomYDimension } = inputFromBackEnd;
 
-    for (let j = 0; j < roomXDim; j++) {
-      indivSquares.push(
+    for (let j = 0; j < roomXDimension; j++) {
+      individualSquares.push(
         <div 
           key={`column-${j + 1}`}
           className='square'
@@ -100,14 +100,14 @@ const App = () => {
       )
     }
     
-    for (let i = roomYDim - 1; i >= 0; i--) {
+    for (let i = roomYDimension - 1; i >= 0; i--) {
       rows.push(
         <div 
           key={`row-${i + 1}`}
           id={`Y: ${i}`}
           className='row'
         >
-          {indivSquares}
+          {individualSquares}
         </div>
       );
     }

@@ -10,13 +10,13 @@ router.get('/', async (req, res) => {
     
     let roomDimensions = input.shift();
     roomDimensions = roomDimensions.split(' ');
-    const roomXDim = parseInt(roomDimensions[0]);
-    const roomYDim = parseInt(roomDimensions[1]);
+    const roomXDimension = parseInt(roomDimensions[0]);
+    const roomYDimension = parseInt(roomDimensions[1]);
     
     let hooverInitialPosition = input.shift();
     hooverInitialPosition = hooverInitialPosition.split(' ');
-    let hooverXPos = parseInt(hooverInitialPosition[0]);
-    let hooverYPos = parseInt(hooverInitialPosition[1]);
+    let hooverXPosition = parseInt(hooverInitialPosition[0]);
+    let hooverYPosition = parseInt(hooverInitialPosition[1]);
     
     let numDirtPatches = input.length - 1;
     let dirtPatches = [];
@@ -30,10 +30,10 @@ router.get('/', async (req, res) => {
     let drivingInstructions = input.shift();
 
     res.json({
-      roomXDim, 
-      roomYDim, 
-      hooverXPos, 
-      hooverYPos,
+      roomXDimension, 
+      roomYDimension, 
+      hooverXPosition, 
+      hooverYPosition,
       dirtPatches, 
       drivingInstructions, 
     });
